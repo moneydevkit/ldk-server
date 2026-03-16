@@ -15,7 +15,7 @@ use crate::api::error::LdkServerErrorCode::InvalidRequestError;
 use crate::service::Context;
 use crate::util::proto_adapter::graph_node_to_proto;
 
-pub(crate) fn handle_graph_get_node_request(
+pub fn handle_graph_get_node_request(
 	context: Context, request: GraphGetNodeRequest,
 ) -> Result<GraphGetNodeResponse, LdkServerError> {
 	let node_id: NodeId = request.node_id.parse().map_err(|_| {

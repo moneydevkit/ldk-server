@@ -12,7 +12,7 @@ use ldk_server_protos::api::{SignMessageRequest, SignMessageResponse};
 use crate::api::error::LdkServerError;
 use crate::service::Context;
 
-pub(crate) fn handle_sign_message_request(
+pub fn handle_sign_message_request(
 	context: Context, request: SignMessageRequest,
 ) -> Result<SignMessageResponse, LdkServerError> {
 	let signature = context.node.sign_message(&request.message);

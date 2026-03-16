@@ -309,7 +309,7 @@ mod tests {
 		do_read_write_remove_list_persist(&store);
 	}
 
-	pub(crate) fn random_storage_path() -> PathBuf {
+	pub fn random_storage_path() -> PathBuf {
 		let mut temp_path = std::env::temp_dir();
 		let mut bytes = [0u8; 8];
 		getrandom::getrandom(&mut bytes).expect("Failed to generate random bytes");
@@ -318,9 +318,7 @@ mod tests {
 		temp_path
 	}
 
-	pub(crate) fn do_read_write_remove_list_persist<K: PaginatedKVStore + RefUnwindSafe>(
-		kv_store: &K,
-	) {
+	pub fn do_read_write_remove_list_persist<K: PaginatedKVStore + RefUnwindSafe>(kv_store: &K) {
 		let data = [42u8; 32];
 
 		let primary_namespace = "testspace";

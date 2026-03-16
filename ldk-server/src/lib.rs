@@ -7,6 +7,9 @@
 // You may not use this file except in accordance with one or both of these
 // licenses.
 
-pub mod events;
-pub mod persist;
-pub mod utils;
+pub mod api;
+pub mod io;
+pub mod service;
+pub mod util;
+
+pub use ldk_node;

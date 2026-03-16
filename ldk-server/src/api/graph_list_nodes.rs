@@ -12,7 +12,7 @@ use ldk_server_protos::api::{GraphListNodesRequest, GraphListNodesResponse};
 use crate::api::error::LdkServerError;
 use crate::service::Context;
 
-pub(crate) fn handle_graph_list_nodes_request(
+pub fn handle_graph_list_nodes_request(
 	context: Context, _request: GraphListNodesRequest,
 ) -> Result<GraphListNodesResponse, LdkServerError> {
 	let node_ids =

@@ -18,7 +18,7 @@ use crate::api::build_channel_config_from_proto;
 use crate::api::error::LdkServerError;
 use crate::service::Context;
 
-pub(crate) fn handle_open_channel(
+pub fn handle_open_channel(
 	context: Context, request: OpenChannelRequest,
 ) -> Result<OpenChannelResponse, LdkServerError> {
 	let node_id = PublicKey::from_str(&request.node_pubkey)

@@ -23,11 +23,28 @@ use serde::{Deserialize, Serialize};
 #[cfg(not(test))]
 const DEFAULT_CONFIG_FILE: &str = "config.toml";
 
+pub fn get_default_data_dir() -> Option<PathBuf> {
+	#[cfg(target_os = "macos")]
+	{
+		#[allow(deprecated)] // todo can remove once we update MSRV to 1.87+
+		std::env::home_dir().map(|home| home.join("Library/Application Support/ldk-server"))
+	}
+	#[cfg(target_os = "windows")]
+	{
+		std::env::var("APPDATA").ok().map(|appdata| PathBuf::from(appdata).join("ldk-server"))
+	}
+	#[cfg(not(any(target_os = "macos", target_os = "windows")))]
+	{
+		#[allow(deprecated)] // todo can remove once we update MSRV to 1.87+
+		std::env::home_dir().map(|home| home.join(".ldk-server"))
+	}
+}
+
 fn get_default_config_path() -> Option<PathBuf> {
 	// Skip the default config path during tests to avoid picking up a real ~/.ldk-server/config.toml locally
 	#[cfg(not(test))]
 	{
-		crate::get_default_data_dir().map(|data_dir| data_dir.join(DEFAULT_CONFIG_FILE))
+		get_default_data_dir().map(|data_dir| data_dir.join(DEFAULT_CONFIG_FILE))
 	}
 	#[cfg(test)]
 	{

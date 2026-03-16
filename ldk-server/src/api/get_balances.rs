@@ -13,7 +13,7 @@ use crate::api::error::LdkServerError;
 use crate::service::Context;
 use crate::util::proto_adapter::{lightning_balance_to_proto, pending_sweep_balance_to_proto};
 
-pub(crate) fn handle_get_balances_request(
+pub fn handle_get_balances_request(
 	context: Context, _request: GetBalancesRequest,
 ) -> Result<GetBalancesResponse, LdkServerError> {
 	let balance_details = context.node.list_balances();

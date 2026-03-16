@@ -53,7 +53,7 @@ pub trait EventPublisher: Send + Sync {
 
 /// A no-op implementation of the [`EventPublisher`] trait.
 #[cfg(not(feature = "events-rabbitmq"))]
-pub(crate) struct NoopEventPublisher;
+pub struct NoopEventPublisher;
 
 #[async_trait]
 #[cfg(not(feature = "events-rabbitmq"))]

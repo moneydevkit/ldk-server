@@ -12,7 +12,7 @@ use ldk_server_protos::api::{GraphListChannelsRequest, GraphListChannelsResponse
 use crate::api::error::LdkServerError;
 use crate::service::Context;
 
-pub(crate) fn handle_graph_list_channels_request(
+pub fn handle_graph_list_channels_request(
 	context: Context, _request: GraphListChannelsRequest,
 ) -> Result<GraphListChannelsResponse, LdkServerError> {
 	let short_channel_ids = context.node.network_graph().list_channels();

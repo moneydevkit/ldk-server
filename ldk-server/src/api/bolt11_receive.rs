@@ -13,7 +13,7 @@ use crate::api::error::LdkServerError;
 use crate::service::Context;
 use crate::util::proto_adapter::proto_to_bolt11_description;
 
-pub(crate) fn handle_bolt11_receive_request(
+pub fn handle_bolt11_receive_request(
 	context: Context, request: Bolt11ReceiveRequest,
 ) -> Result<Bolt11ReceiveResponse, LdkServerError> {
 	let description = proto_to_bolt11_description(request.description)?;

@@ -7,11 +7,6 @@
 // You may not use this file except in accordance with one or both of these
 // licenses.
 
-mod api;
-mod io;
-mod service;
-mod util;
-
 use std::fs;
 use std::os::unix::fs::PermissionsExt;
 use std::path::{Path, PathBuf};
@@ -27,6 +22,22 @@ use ldk_node::config::Config;
 use ldk_node::entropy::NodeEntropy;
 use ldk_node::lightning::ln::channelmanager::PaymentId;
 use ldk_node::{Builder, Event, Node};
+use ldk_server::io::events::event_publisher::EventPublisher;
+use ldk_server::io::events::get_event_name;
+#[cfg(feature = "events-rabbitmq")]
+use ldk_server::io::events::rabbitmq::{RabbitMqConfig, RabbitMqEventPublisher};
+use ldk_server::io::persist::paginated_kv_store::PaginatedKVStore;
+use ldk_server::io::persist::sqlite_store::SqliteStore;
+use ldk_server::io::persist::{
+	FORWARDED_PAYMENTS_PERSISTENCE_PRIMARY_NAMESPACE,
+	FORWARDED_PAYMENTS_PERSISTENCE_SECONDARY_NAMESPACE, PAYMENTS_PERSISTENCE_PRIMARY_NAMESPACE,
+	PAYMENTS_PERSISTENCE_SECONDARY_NAMESPACE,
+};
+use ldk_server::service::NodeService;
+use ldk_server::util::config::{get_default_data_dir, load_config, ArgsConfig, ChainSource};
+use ldk_server::util::logger::ServerLogger;
+use ldk_server::util::proto_adapter::{forwarded_payment_to_proto, payment_to_proto};
+use ldk_server::util::tls::get_or_generate_tls_config;
 use ldk_server_protos::events;
 use ldk_server_protos::events::{event_envelope, EventEnvelope};
 use ldk_server_protos::types::Payment;
@@ -36,41 +47,7 @@ use tokio::net::TcpListener;
 use tokio::select;
 use tokio::signal::unix::SignalKind;
 
-use crate::io::events::event_publisher::EventPublisher;
-use crate::io::events::get_event_name;
-#[cfg(feature = "events-rabbitmq")]
-use crate::io::events::rabbitmq::{RabbitMqConfig, RabbitMqEventPublisher};
-use crate::io::persist::paginated_kv_store::PaginatedKVStore;
-use crate::io::persist::sqlite_store::SqliteStore;
-use crate::io::persist::{
-	FORWARDED_PAYMENTS_PERSISTENCE_PRIMARY_NAMESPACE,
-	FORWARDED_PAYMENTS_PERSISTENCE_SECONDARY_NAMESPACE, PAYMENTS_PERSISTENCE_PRIMARY_NAMESPACE,
-	PAYMENTS_PERSISTENCE_SECONDARY_NAMESPACE,
-};
-use crate::service::NodeService;
-use crate::util::config::{load_config, ArgsConfig, ChainSource};
-use crate::util::logger::ServerLogger;
-use crate::util::proto_adapter::{forwarded_payment_to_proto, payment_to_proto};
-use crate::util::tls::get_or_generate_tls_config;
-
 const API_KEY_FILE: &str = "api_key";
-
-pub fn get_default_data_dir() -> Option<PathBuf> {
-	#[cfg(target_os = "macos")]
-	{
-		#[allow(deprecated)] // todo can remove once we update MSRV to 1.87+
-		std::env::home_dir().map(|home| home.join("Library/Application Support/ldk-server"))
-	}
-	#[cfg(target_os = "windows")]
-	{
-		std::env::var("APPDATA").ok().map(|appdata| PathBuf::from(appdata).join("ldk-server"))
-	}
-	#[cfg(not(any(target_os = "macos", target_os = "windows")))]
-	{
-		#[allow(deprecated)] // todo can remove once we update MSRV to 1.87+
-		std::env::home_dir().map(|home| home.join(".ldk-server"))
-	}
-}
 
 fn main() {
 	let args_config = ArgsConfig::parse();
@@ -211,7 +188,7 @@ fn main() {
 
 	#[cfg(not(feature = "events-rabbitmq"))]
 	let event_publisher: Arc<dyn EventPublisher> =
-		Arc::new(crate::io::events::event_publisher::NoopEventPublisher);
+		Arc::new(ldk_server::io::events::event_publisher::NoopEventPublisher);
 
 	#[cfg(feature = "events-rabbitmq")]
 	let event_publisher: Arc<dyn EventPublisher> = {

@@ -3,6 +3,14 @@ name = "ldk-server"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+name = "ldk_server"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ldk-server"
+path = "src/main.rs"
+
 [dependencies]
 ldk-node = { git = "https://github.com/lightningdevkit/ldk-node", rev = "9e0cfc5fa9b9dd74fefb795580d00b0a46c8f3a3" }
 serde = { version = "1.0.203", default-features = false, features = ["derive"] }

@@ -7,15 +7,15 @@
 // You may not use this file except in accordance with one or both of these
 // licenses.
 
-pub(crate) mod event_publisher;
+pub mod event_publisher;
 
 #[cfg(feature = "events-rabbitmq")]
-pub(crate) mod rabbitmq;
+pub mod rabbitmq;
 
 use ldk_server_protos::events::event_envelope;
 
 /// Event variant to event name mapping.
-pub(crate) fn get_event_name(event: &event_envelope::Event) -> &'static str {
+pub fn get_event_name(event: &event_envelope::Event) -> &'static str {
 	match event {
 		event_envelope::Event::PaymentReceived(_) => "PaymentReceived",
 		event_envelope::Event::PaymentSuccessful(_) => "PaymentSuccessful",

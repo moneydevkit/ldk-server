@@ -16,7 +16,7 @@ use crate::api::error::LdkServerErrorCode::InvalidRequestError;
 use crate::service::Context;
 use crate::util::proto_adapter::payment_to_proto;
 
-pub(crate) fn handle_get_payment_details_request(
+pub fn handle_get_payment_details_request(
 	context: Context, request: GetPaymentDetailsRequest,
 ) -> Result<GetPaymentDetailsResponse, LdkServerError> {
 	let payment_id_bytes =

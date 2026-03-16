@@ -16,7 +16,7 @@ use crate::api::error::LdkServerError;
 use crate::api::error::LdkServerErrorCode::InvalidRequestError;
 use crate::service::Context;
 
-pub(crate) fn handle_verify_signature_request(
+pub fn handle_verify_signature_request(
 	context: Context, request: VerifySignatureRequest,
 ) -> Result<VerifySignatureResponse, LdkServerError> {
 	let public_key = PublicKey::from_str(&request.public_key).map_err(|_| {

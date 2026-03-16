@@ -19,7 +19,7 @@ use crate::io::persist::{
 };
 use crate::service::Context;
 
-pub(crate) fn handle_list_payments_request(
+pub fn handle_list_payments_request(
 	context: Context, request: ListPaymentsRequest,
 ) -> Result<ListPaymentsResponse, LdkServerError> {
 	let page_token = request.page_token.map(|p| (p.token, p.index));

@@ -109,7 +109,7 @@ pub(crate) fn channel_config_to_proto(
 	}
 }
 
-pub(crate) fn payment_to_proto(payment: PaymentDetails) -> Payment {
+pub fn payment_to_proto(payment: PaymentDetails) -> Payment {
 	let PaymentDetails {
 		id,
 		kind,
@@ -401,7 +401,7 @@ pub(crate) fn pending_sweep_balance_to_proto(
 }
 
 #[allow(clippy::too_many_arguments)]
-pub(crate) fn forwarded_payment_to_proto(
+pub fn forwarded_payment_to_proto(
 	prev_channel_id: ChannelId, next_channel_id: ChannelId,
 	prev_user_channel_id: Option<UserChannelId>, next_user_channel_id: Option<UserChannelId>,
 	prev_node_id: Option<PublicKey>, next_node_id: Option<PublicKey>,

@@ -72,7 +72,7 @@ pub struct NodeService {
 }
 
 impl NodeService {
-	pub(crate) fn new(
+	pub fn new(
 		node: Arc<Node>, paginated_kv_store: Arc<dyn PaginatedKVStore>, api_key: String,
 	) -> Self {
 		Self { node, paginated_kv_store, api_key }
@@ -148,9 +148,9 @@ fn validate_hmac_auth(
 	Ok(())
 }
 
-pub(crate) struct Context {
-	pub(crate) node: Arc<Node>,
-	pub(crate) paginated_kv_store: Arc<dyn PaginatedKVStore>,
+pub struct Context {
+	pub node: Arc<Node>,
+	pub paginated_kv_store: Arc<dyn PaginatedKVStore>,
 }
 
 impl Service<Request<Incoming>> for NodeService {

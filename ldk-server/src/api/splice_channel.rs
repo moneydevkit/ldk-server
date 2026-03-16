@@ -20,7 +20,7 @@ use crate::api::error::LdkServerError;
 use crate::api::error::LdkServerErrorCode::InvalidRequestError;
 use crate::service::Context;
 
-pub(crate) fn handle_splice_in_request(
+pub fn handle_splice_in_request(
 	context: Context, request: SpliceInRequest,
 ) -> Result<SpliceInResponse, LdkServerError> {
 	let user_channel_id = parse_user_channel_id(&request.user_channel_id)?;
@@ -31,7 +31,7 @@ pub(crate) fn handle_splice_in_request(
 	Ok(SpliceInResponse {})
 }
 
-pub(crate) fn handle_splice_out_request(
+pub fn handle_splice_out_request(
 	context: Context, request: SpliceOutRequest,
 ) -> Result<SpliceOutResponse, LdkServerError> {
 	let user_channel_id = parse_user_channel_id(&request.user_channel_id)?;
