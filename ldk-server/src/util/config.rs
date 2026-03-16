@@ -46,8 +46,11 @@ pub struct Config {
 	pub rest_service_addr: SocketAddr,
 	pub storage_dir_path: Option<String>,
 	pub chain_source: ChainSource,
+	#[cfg_attr(not(feature = "events-rabbitmq"), allow(dead_code))]
 	pub rabbitmq_connection_string: String,
+	#[cfg_attr(not(feature = "events-rabbitmq"), allow(dead_code))]
 	pub rabbitmq_exchange_name: String,
+	#[cfg_attr(not(feature = "experimental-lsps2-support"), allow(dead_code))]
 	pub lsps2_service_config: Option<LSPS2ServiceConfig>,
 	pub log_level: LevelFilter,
 	pub log_file_path: Option<String>,

@@ -355,11 +355,11 @@ mod tests {
 		kv_store.write("", "", testkey, 0, &data).unwrap();
 		let res =
 			std::panic::catch_unwind(|| kv_store.write("", secondary_namespace, testkey, 0, &data));
-		assert!(res.is_err());
+		assert!(res.is_err() || res.unwrap().is_err());
 		let res = std::panic::catch_unwind(|| {
 			kv_store.write(primary_namespace, secondary_namespace, "", 0, &data)
 		});
-		assert!(res.is_err());
+		assert!(res.is_err() || res.unwrap().is_err());
 
 		let listed_keys = list_all_keys(primary_namespace, secondary_namespace);
 		assert_eq!(listed_keys.len(), 110);
