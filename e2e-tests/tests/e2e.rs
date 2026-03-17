@@ -575,8 +575,8 @@ async fn test_forwarded_payment_event() {
 	builder_c.set_liquidity_source_lsps2(b_node_id, b_addr, None);
 
 	let seed_path_c = storage_dir_c.join("keys_seed").to_str().unwrap().to_string();
-	let node_entropy_c = ldk_node::entropy::NodeEntropy::from_seed_path(seed_path_c).unwrap();
-	let node_c = builder_c.build(node_entropy_c).unwrap();
+	builder_c.set_entropy_seed_path(seed_path_c);
+	let node_c = builder_c.build().unwrap();
 
 	node_c.start().unwrap();
 

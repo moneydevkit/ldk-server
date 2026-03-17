@@ -12,7 +12,8 @@ name = "ldk-server"
 path = "src/main.rs"
 
 [dependencies]
-ldk-node = { git = "https://github.com/lightningdevkit/ldk-node", rev = "9e0cfc5fa9b9dd74fefb795580d00b0a46c8f3a3" }
+# Branch: https://github.com/moneydevkit/ldk-node/commits/lsp-0.7.0_accept-underpaying-htlcs_with_timing_logs/
+ldk-node = { git = "https://github.com/moneydevkit/ldk-node", rev = "4309f479106aff3d768524a157e2a4178d48eaa5" }
 serde = { version = "1.0.203", default-features = false, features = ["derive"] }
 hyper = { version = "1", default-features = false, features = ["server", "http1"] }
 http-body-util = { version = "0.1", default-features = false }

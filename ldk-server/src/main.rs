@@ -19,7 +19,6 @@ use hyper::server::conn::http1;
 use hyper_util::rt::TokioIo;
 use ldk_node::bitcoin::Network;
 use ldk_node::config::Config;
-use ldk_node::entropy::NodeEntropy;
 use ldk_node::lightning::ln::channelmanager::PaymentId;
 use ldk_node::{Builder, Event, Node};
 use ldk_server::io::events::event_publisher::EventPublisher;
@@ -161,15 +160,9 @@ fn main() {
 	builder.set_runtime(runtime.handle().clone());
 
 	let seed_path = storage_dir.join("keys_seed").to_str().unwrap().to_string();
-	let node_entropy = match NodeEntropy::from_seed_path(seed_path) {
-		Ok(entropy) => entropy,
-		Err(e) => {
-			error!("Failed to load or generate seed: {e}");
-			std::process::exit(-1);
-		},
-	};
+	builder.set_entropy_seed_path(seed_path);
 
-	let node = match builder.build(node_entropy) {
+	let node = match builder.build() {
 		Ok(node) => Arc::new(node),
 		Err(e) => {
 			error!("Failed to build LDK Node: {e}");
