@@ -12,8 +12,8 @@ name = "ldk-server"
 path = "src/main.rs"
 
 [dependencies]
-# Branch: https://github.com/moneydevkit/ldk-node/commits/lsp-0.7.0_accept-underpaying-htlcs_with_timing_logs/
-ldk-node = { git = "https://github.com/moneydevkit/ldk-node", rev = "4309f479106aff3d768524a157e2a4178d48eaa5" }
+# Branch: https://github.com/moneydevkit/ldk-node/commits/lsp-0.7.0_socks-support/
+ldk-node = { git = "https://github.com/moneydevkit/ldk-node", rev = "c3aba2a47a6314968979de8fe772d9d1bcb3ee6e" }
 serde = { version = "1.0.203", default-features = false, features = ["derive"] }
 hyper = { version = "1", default-features = false, features = ["server", "http1"] }
 http-body-util = { version = "0.1", default-features = false }

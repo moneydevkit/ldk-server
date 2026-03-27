@@ -14,5 +14,5 @@ hex-conservative = { version = "0.2", features = ["std"] }
 lapin = { version = "2.4.0", features = ["rustls"], default-features = false }
 prost = { version = "0.11.6", default-features = false, features = ["std"] }
 futures-util = "0.3"
-# Branch: https://github.com/moneydevkit/ldk-node/commits/lsp-0.7.0_accept-underpaying-htlcs_with_timing_logs/
-ldk-node = { git = "https://github.com/moneydevkit/ldk-node", rev = "4309f479106aff3d768524a157e2a4178d48eaa5" }
+# Branch: https://github.com/moneydevkit/ldk-node/commits/lsp-0.7.0_socks-support/
+ldk-node = { git = "https://github.com/moneydevkit/ldk-node", rev = "c3aba2a47a6314968979de8fe772d9d1bcb3ee6e" }

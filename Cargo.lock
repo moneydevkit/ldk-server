@@ -121,7 +121,7 @@ dependencies = [
  "nom",
  "num-traits",
  "rusticata-macros",
- "thiserror",
+ "thiserror 2.0.17",
  "time",
 ]
 
@@ -1698,7 +1698,7 @@ checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
 [[package]]
 name = "ldk-node"
 version = "0.7.0"
-source = "git+https://github.com/moneydevkit/ldk-node?rev=4309f479106aff3d768524a157e2a4178d48eaa5#4309f479106aff3d768524a157e2a4178d48eaa5"
+source = "git+https://github.com/moneydevkit/ldk-node?rev=c3aba2a47a6314968979de8fe772d9d1bcb3ee6e#c3aba2a47a6314968979de8fe772d9d1bcb3ee6e"
 dependencies = [
  "base64 0.22.1",
  "bdk_chain",
@@ -1825,7 +1825,7 @@ dependencies = [
 [[package]]
 name = "lightning"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bech32",
  "bitcoin",
@@ -1836,7 +1836,7 @@ dependencies = [
  "lightning-macros 0.2.0",
  "lightning-types 0.3.0",
  "musig2",
- "possiblyrandom 0.2.0 (git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611)",
+ "possiblyrandom 0.2.0 (git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f)",
 ]
 
 [[package]]
@@ -1859,7 +1859,7 @@ dependencies = [
 [[package]]
 name = "lightning-background-processor"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bitcoin",
  "bitcoin-io",
@@ -1867,13 +1867,13 @@ dependencies = [
  "lightning 0.2.0",
  "lightning-liquidity",
  "lightning-rapid-gossip-sync",
- "possiblyrandom 0.2.0 (git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611)",
+ "possiblyrandom 0.2.0 (git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f)",
 ]
 
 [[package]]
 name = "lightning-block-sync"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bitcoin",
  "chunked_transfer",
@@ -1885,7 +1885,7 @@ dependencies = [
 [[package]]
 name = "lightning-invoice"
 version = "0.34.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bech32",
  "bitcoin",
@@ -1906,7 +1906,7 @@ dependencies = [
 [[package]]
 name = "lightning-liquidity"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bitcoin",
  "chrono",
@@ -1921,7 +1921,7 @@ dependencies = [
 [[package]]
 name = "lightning-macros"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1941,17 +1941,18 @@ dependencies = [
 [[package]]
 name = "lightning-net-tokio"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bitcoin",
  "lightning 0.2.0",
  "tokio",
+ "tokio-socks",
 ]
 
 [[package]]
 name = "lightning-persister"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bitcoin",
  "lightning 0.2.0",
@@ -1962,7 +1963,7 @@ dependencies = [
 [[package]]
 name = "lightning-rapid-gossip-sync"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bitcoin",
  "bitcoin-io",
@@ -1973,7 +1974,7 @@ dependencies = [
 [[package]]
 name = "lightning-transaction-sync"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bitcoin",
  "electrum-client",
@@ -1986,7 +1987,7 @@ dependencies = [
 [[package]]
 name = "lightning-types"
 version = "0.3.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "bitcoin",
 ]
@@ -2181,7 +2182,7 @@ dependencies = [
  "rc2",
  "sha1",
  "sha2",
- "thiserror",
+ "thiserror 2.0.17",
  "x509-parser",
 ]
 
@@ -2359,7 +2360,7 @@ dependencies = [
 [[package]]
 name = "possiblyrandom"
 version = "0.2.0"
-source = "git+https://github.com/moneydevkit/rust-lightning?rev=070b31d93ca28a80a204e9ddf540eb7767b72611#070b31d93ca28a80a204e9ddf540eb7767b72611"
+source = "git+https://github.com/moneydevkit/rust-lightning?rev=adf445e5d5e5c9f0f3c0e3925989404707e06e3f#adf445e5d5e5c9f0f3c0e3925989404707e06e3f"
 dependencies = [
  "getrandom 0.2.16",
 ]
@@ -2483,7 +2484,7 @@ dependencies = [
  "rustc-hash",
  "rustls 0.23.34",
  "socket2 0.6.1",
- "thiserror",
+ "thiserror 2.0.17",
  "tokio",
  "tracing",
  "web-time",
@@ -2504,7 +2505,7 @@ dependencies = [
  "rustls 0.23.34",
  "rustls-pki-types",
  "slab",
- "thiserror",
+ "thiserror 2.0.17",
  "tinyvec",
  "tracing",
  "web-time",
@@ -3299,11 +3300,31 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
+version = "1.0.69"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52"
+dependencies = [
+ "thiserror-impl 1.0.69",
+]
+
+[[package]]
+name = "thiserror"
 version = "2.0.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f63587ca0f12b72a0600bcba1d40081f830876000bb46dd2337a3051618f4fc8"
 dependencies = [
- "thiserror-impl",
+ "thiserror-impl 2.0.17",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "1.0.69"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4fee6c4efc90059e10f81e6d42c60a18f76588c3d74cb83a0b242a2b6c7504c1"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.108",
 ]
 
 [[package]]
@@ -3417,6 +3438,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1729aa945f29d91ba541258c8df89027d5792d85a8841fb65e8bf0f4ede4ef61"
 dependencies = [
  "rustls 0.23.34",
+ "tokio",
+]
+
+[[package]]
+name = "tokio-socks"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0d4770b8024672c1101b3f6733eab95b18007dbe0847a8afe341fcf79e06043f"
+dependencies = [
+ "either",
+ "futures-util",
+ "thiserror 1.0.69",
  "tokio",
 ]
 
@@ -4118,7 +4151,7 @@ dependencies = [
  "nom",
  "oid-registry",
  "rusticata-macros",
- "thiserror",
+ "thiserror 2.0.17",
  "time",
 ]
 
