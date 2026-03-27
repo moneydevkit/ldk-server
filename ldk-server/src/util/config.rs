@@ -62,7 +62,7 @@ pub struct Config {
 	pub tls_config: Option<TlsConfig>,
 	pub rest_service_addr: SocketAddr,
 	pub storage_dir_path: Option<String>,
-	pub chain_source: ChainSource,
+	pub chain_source: Option<ChainSource>,
 	#[cfg_attr(not(feature = "events-rabbitmq"), allow(dead_code))]
 	pub rabbitmq_connection_string: String,
 	#[cfg_attr(not(feature = "events-rabbitmq"), allow(dead_code))]
@@ -275,7 +275,7 @@ impl ConfigBuilder {
 			.filter(|&&is_configured| is_configured)
 			.count();
 
-		if configured_sources_count != 1 {
+		if configured_sources_count > 1 {
 			return Err(io::Error::new(
 				io::ErrorKind::InvalidInput,
 				"Must set a single chain source, multiple were configured".to_string(),
@@ -295,13 +295,11 @@ impl ConfigBuilder {
 				.bitcoind_rpc_password
 				.ok_or_else(|| missing_field_err("bitcoind_rpc_password"))?;
 
-			ChainSource::Rpc { rpc_host, rpc_port, rpc_user, rpc_password }
-		} else if let Some(url) = self.electrum_url {
-			ChainSource::Electrum { server_url: url }
-		} else if let Some(url) = self.esplora_url {
-			ChainSource::Esplora { server_url: url }
+			Some(ChainSource::Rpc { rpc_host, rpc_port, rpc_user, rpc_password })
 		} else {
-			return Err(io::Error::new(io::ErrorKind::InvalidInput, "No valid Chain Source configured. Provide Bitcoind RPC, Electrum, or Esplora details."));
+			self.electrum_url
+				.map(|url| ChainSource::Electrum { server_url: url })
+				.or_else(|| self.esplora_url.map(|url| ChainSource::Esplora { server_url: url }))
 		};
 
 		let log_level = self
@@ -764,12 +762,12 @@ mod tests {
 				key_path: Some("/path/to/tls.key".to_string()),
 				hosts: vec!["example.com".to_string(), "ldk-server.local".to_string()],
 			}),
-			chain_source: ChainSource::Rpc {
+			chain_source: Some(ChainSource::Rpc {
 				rpc_host: "127.0.0.1".to_string(),
 				rpc_port: 8332,
 				rpc_user: "bitcoind-testuser".to_string(),
 				rpc_password: "bitcoind-testpassword".to_string(),
-			},
+			}),
 			rabbitmq_connection_string: expected_rabbit_conn,
 			rabbitmq_exchange_name: expected_rabbit_exchange,
 			lsps2_service_config: Some(LSPS2ServiceConfig {
@@ -849,7 +847,7 @@ mod tests {
 		fs::write(storage_path.join(config_file_name), toml_config).unwrap();
 		let config = load_config(&args_config).unwrap();
 
-		let ChainSource::Electrum { server_url } = config.chain_source else {
+		let Some(ChainSource::Electrum { server_url }) = config.chain_source else {
 			panic!("unexpected chain source");
 		};
 
@@ -902,7 +900,8 @@ mod tests {
 		fs::write(storage_path.join(config_file_name), toml_config).unwrap();
 		let config = load_config(&args_config).unwrap();
 
-		let ChainSource::Rpc { rpc_host, rpc_port, rpc_user, rpc_password } = config.chain_source
+		let Some(ChainSource::Rpc { rpc_host, rpc_port, rpc_user, rpc_password }) =
+			config.chain_source
 		else {
 			panic!("unexpected chain source");
 		};
@@ -1005,6 +1004,27 @@ mod tests {
 	}
 
 	#[test]
+	fn test_config_no_chain_source_yields_none() {
+		let storage_path = std::env::temp_dir();
+		let config_file_name = "test_config_no_chain_source.toml";
+
+		let toml_config = r#"
+			[node]
+			network = "regtest"
+			rest_service_address = "127.0.0.1:3002"
+			"#;
+
+		fs::write(storage_path.join(config_file_name), toml_config).unwrap();
+
+		let mut args_config = empty_args_config();
+		args_config.config_file =
+			Some(storage_path.join(config_file_name).to_string_lossy().to_string());
+
+		let config = load_config(&args_config).unwrap();
+		assert_eq!(config.chain_source, None);
+	}
+
+	#[test]
 	fn test_config_missing_fields_in_file() {
 		let storage_path = std::env::temp_dir();
 		let config_file_name = "test_config_missing_fields_in_file.toml";
@@ -1083,12 +1103,12 @@ mod tests {
 			alias: Some(parse_alias(args_config.node_alias.as_deref().unwrap()).unwrap()),
 			storage_dir_path: Some(args_config.storage_dir_path.unwrap()),
 			tls_config: None,
-			chain_source: ChainSource::Rpc {
+			chain_source: Some(ChainSource::Rpc {
 				rpc_host: host,
 				rpc_port: port,
 				rpc_user: args_config.bitcoind_rpc_user.unwrap(),
 				rpc_password: args_config.bitcoind_rpc_password.unwrap(),
-			},
+			}),
 			rabbitmq_connection_string: String::new(),
 			rabbitmq_exchange_name: String::new(),
 			lsps2_service_config: None,
@@ -1174,12 +1194,12 @@ mod tests {
 				key_path: Some("/path/to/tls.key".to_string()),
 				hosts: vec!["example.com".to_string(), "ldk-server.local".to_string()],
 			}),
-			chain_source: ChainSource::Rpc {
+			chain_source: Some(ChainSource::Rpc {
 				rpc_host: host,
 				rpc_port: port,
 				rpc_user: args_config.bitcoind_rpc_user.unwrap(),
 				rpc_password: args_config.bitcoind_rpc_password.unwrap(),
-			},
+			}),
 			rabbitmq_connection_string: expected_rabbit_conn,
 			rabbitmq_exchange_name: expected_rabbit_exchange,
 			lsps2_service_config: Some(LSPS2ServiceConfig {

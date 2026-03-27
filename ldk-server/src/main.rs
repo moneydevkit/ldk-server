@@ -128,14 +128,20 @@ fn main() {
 	}
 
 	match config_file.chain_source {
-		ChainSource::Rpc { rpc_host, rpc_port, rpc_user, rpc_password } => {
+		Some(ChainSource::Rpc { rpc_host, rpc_port, rpc_user, rpc_password }) => {
 			builder.set_chain_source_bitcoind_rpc(rpc_host, rpc_port, rpc_user, rpc_password);
 		},
-		ChainSource::Electrum { server_url } => {
+		Some(ChainSource::Electrum { server_url }) => {
 			builder.set_chain_source_electrum(server_url, None);
 		},
-		ChainSource::Esplora { server_url } => {
+		Some(ChainSource::Esplora { server_url }) => {
 			builder.set_chain_source_esplora(server_url, None);
+		},
+		None => {
+			eprintln!(
+				"No chain source configured. Set [bitcoind], [electrum], or [esplora] in config."
+			);
+			std::process::exit(-1);
 		},
 	}
 
